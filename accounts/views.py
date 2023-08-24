@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from django.contrib import messages
+from django.contrib import messages, auth
 from accounts.forms import UserForm
 from accounts.models import User, UserProfile
 from vendor.forms import VendorForm
@@ -82,9 +82,27 @@ def registerVendor(request):
     return render(request, 'accounts/registerVendor.html',context)
 
 def login(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+
+        print(email,password)
+
+        user = auth.authenticate(email=email,password=password)
+     
+        if user is not None:
+            auth.login(request, user)
+            messages.success(request, 'You are Logged in.')
+            return redirect('dashboard')
+        else:
+            messages.error(request, 'Invalid Login Credentials')
+            return redirect('login')
     return render(request,'accounts/login.html')
 
 def logout(request):
-    return 
+    auth.logout(request)
+    messages.info(request,'You are logged out.')
+    return redirect('login')
+
 def dashboard(request):
-    return 
+    return render(request, 'accounts/dashboard.html')

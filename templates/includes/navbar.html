@@ -30,13 +30,18 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                         <div class="login-option">
-                            
+                            {% if user.is_authenticated %}
+                            <a href="{% url 'dashboard' %}" class="cs-color cs-popup-joinus-btn login-popup"> My Account</a>
+                            <a href="{% url 'logout' %}" class="cs-color cs-popup-joinus-btn login-popup text-danger"> logout</a>
+                            {% else %}
                             <span><a href="{% url 'login' %}" class="cs-color cs-popup-joinus-btn login-popup"> Login</a></span>
+                            
                             <span><a href="{% url 'registerUser' %}" class="cs-color cs-popup-joinus-btn login-popup"> Register</a></span>
                             
                             <a class="get-start-btn" href="{% url 'registerVendor' %}">
                                 Register
                                 Restaurant </a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
