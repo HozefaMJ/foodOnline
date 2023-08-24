@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-
+from django.contrib import messages
 from accounts.forms import UserForm
 from accounts.models import User
 
@@ -28,6 +28,7 @@ def registerUser(request):
             user = User.objects.create_user(first_name=first_name,last_name=last_name,username=username,email=email,password=password)
             user.role = User.CUSTOMER
             user.save()
+            messages.success(request, 'Your Account has Registered')
             print('User is created')
             return redirect('registerUser')
         else:
