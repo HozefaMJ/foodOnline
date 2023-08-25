@@ -146,8 +146,8 @@ MESSAGE_TAGS = {
 
 
 # EMAIL CONFIG
-EMAIL_HOST = config('EMAIL_HOST')
-EMAIL_PORT = config('EMAIL_PORT',cast=int)
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = config('EMAIL_USE_TLS')
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'hozefa.dexter.test@gmail.com'
+EMAIL_HOST_PASSWORD = 'sivsxznmftpncasl'
+EMAIL_USE_TLS = True
