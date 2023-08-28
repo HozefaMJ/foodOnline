@@ -1,0 +1,12 @@
+{% autoescape off %}
+
+Hi {{user.first_name}},
+
+{% if is_approved %}
+APPROVED
+{% else %}
+SORRY NOT APPROVED
+{% endif %}
+
+
+{% endautoescape %}
