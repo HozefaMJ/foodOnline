@@ -59,7 +59,9 @@ def registerUser(request):
             user.save()
 
             # Send Verification Email
-            send_verification_email(request,user)
+            mail_subject = 'Please Activate your account'
+            email_template = 'accounts/emails/accounts_verification_email.html'
+            send_verification_email(request,user,mail_subject,email_template)
 
             messages.success(request, 'Your Account has Registered')
             print('User is created')
@@ -95,7 +97,9 @@ def registerVendor(request):
             user.save()
 
             # Send Verification Email
-            send_verification_email(request,user)
+            mail_subject = 'Please Activate your account'
+            email_template = 'accounts/emails/accounts_verification_email.html'
+            send_verification_email(request,user,mail_subject,email_template)
 
             vendor = v_form.save(commit=False)
             vendor.user = user
@@ -178,3 +182,30 @@ def custDashboard(request):
 @user_passes_test(check_role_vendor)
 def vendorDashboard(request):
     return render(request, 'accounts/vendorDashboard.html')
+
+
+def forgot_password(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+
+        if User.objects.filter(email=email).exists():
+            user = User.objects.get(email__exact=email)
+
+            # Send Reset Password Email
+            mail_subject = 'Reset Your Password'
+            email_template = 'accounts/emails/reset_password_email.html'
+            send_verification_email(request,user,mail_subject,email_template)
+            messages.success(request,'Password reset link has been sent to your email address')
+            return redirect('login')
+        else:
+            messages.error(request,'Account does not exist')
+            return redirect('forgot_password')
+
+    return render(request,'accounts/forgot_password.html')
+
+def reset_password_validate(request,uidb64,token):
+    # validate the user by decoding the token and user PK
+    return
+
+def reset_password(request):
+    return render(request,'accounts/reset_password.html')
