@@ -47,7 +47,10 @@
                                             <i class="fa fa-pencil text-info" aria-hidden="true"></i>
                                         </a>
                                         &nbsp; 
-                                        <i class="fa fa-trash text-danger" aria-hidden="true"></i></td>
+                                        <a href="{% url 'delete_category' cat.id %}" onclick="return confirm('Are you want to delete {{cat.category_name}}?')" style="color: unset;">
+                                            <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
                                   </tr>
                                 {% endfor %}
                                 </tbody>
