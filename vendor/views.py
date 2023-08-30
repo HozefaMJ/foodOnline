@@ -4,6 +4,7 @@ from accounts.forms import UserProfileForm
 from accounts.models import UserProfile
 from vendor.forms import VendorForm
 from vendor.models import Vendor
+from menu.models import Category,FoodItem
 from django.contrib.auth.decorators import login_required, user_passes_test
 from accounts.views import check_role_vendor
 
@@ -39,3 +40,10 @@ def vprofile(request):
 
     return render(request, 'vendor/vprofile.html',context)
 
+def menu_builder(request):
+    vendor = Vendor.objects.get(user=request.user)
+    categories = Category.objects.filter(vendor=vendor)
+    context = {
+        'categories':categories
+    }
+    return render(request,'vendor/menu_builder.html',context)
