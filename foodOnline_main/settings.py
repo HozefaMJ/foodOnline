@@ -154,3 +154,6 @@ EMAIL_HOST_USER = 'hozefa.dexter.test@gmail.com'
 EMAIL_HOST_PASSWORD = 'sivsxznmftpncasl'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Dexter Inc.'
+
+
+TIME_ZONE = 'Asia/Kolkata'
