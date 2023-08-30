@@ -2,11 +2,13 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from accounts.forms import UserProfileForm
 from accounts.models import UserProfile
+from menu.forms import CategoryForm
 from vendor.forms import VendorForm
 from vendor.models import Vendor
 from menu.models import Category,FoodItem
 from django.contrib.auth.decorators import login_required, user_passes_test
 from accounts.views import check_role_vendor
+from django.template.defaultfilters import slugify
 
 def get_vendor(request):
     vendor = Vendor.objects.get(user=request.user)
@@ -64,3 +66,22 @@ def fooditems_by_category(request,pk=None):
         'category':category
     }
     return render(request, 'vendor/fooditems_by_category.html',context)
+
+def add_category(request):
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            category = form.save(commit=False)
+            category.vendor = get_vendor(request)
+            category.slug = slugify(form.cleaned_data['category_name'])
+            form.save()
+            messages.success(request,'Category Added!')
+            return redirect('menu_builder')
+        else:
+            print(form.errors)
+    else:
+        form = CategoryForm()
+    context = {
+        'form':form,
+    }
+    return render(request, 'vendor/add_category.html',context)
