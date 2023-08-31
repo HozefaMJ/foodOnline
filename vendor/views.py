@@ -140,6 +140,8 @@ def add_food(request):
             print(form.errors)
     else:
         form = FoodItemForm()
+        # Only Showing Categories which are created by the user
+        form.fields['category'].queryset = Category.objects.filter(vendor=get_vendor(request))
     context = {
         'form':form,
     }
@@ -163,6 +165,8 @@ def edit_food(request,pk=None):
             print(form.errors)
     else:
         form = FoodItemForm(instance=food)
+        # Only Showing Categories which are created by the user
+        form.fields['category'].queryset = Category.objects.filter(vendor=get_vendor(request))
     context = {
         'form':form,
         'food':food,
