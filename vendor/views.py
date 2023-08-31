@@ -168,3 +168,11 @@ def edit_food(request,pk=None):
         'food':food,
     }
     return render(request, 'vendor/edit_food.html',context)
+
+@login_required(login_url='login')
+@user_passes_test(check_role_vendor)
+def delete_food(request,pk=None):
+    food = get_object_or_404(FoodItem,pk=pk)
+    food.delete()
+    messages.error(request,'Food Deleted')
+    return redirect('fooditems_by_category',food.category.id)
